@@ -4,6 +4,7 @@
   "description": "Service to get Repositories from Github",
   "main": "app.js",
   "scripts": {
+    "start": "npm run build && node app.js",
     "test": "nyc mocha ./tests/**/*.test.js --exit --debug",
     "coverage": "istanbul cover --include-all-sources *.js && istanbul check-coverage"
   },
