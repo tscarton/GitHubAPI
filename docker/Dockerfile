@@ -7,5 +7,4 @@ WORKDIR /app
 RUN git clone https://github.com/tscarton/GitHubAPI.git
 WORKDIR /app/GitHubAPI
 RUN npm install
-RUN npm i --global mocha 
 RUN npm run test
