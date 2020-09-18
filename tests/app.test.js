@@ -4,7 +4,7 @@ const chai = require('chai');
 var sinon = require('sinon');
 
 let expect = chai.expect;
-let token = 'b33a7007f800b74e8e7e8ca0d2e995ceaba62c9c';
+let token = 'a2b19364d25a5bb12798656d1bd150661c2d09ae';
 
 describe('Testing the app', () => {
    it('Accessing without token ', async () => {
