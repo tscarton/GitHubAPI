@@ -1,34 +1,37 @@
-const server = require('../app');
-const request = require('supertest');
+const app = require('../app');
 const chai = require('chai');
-var sinon = require('sinon');
+const chaiHttp = require('chai-http');
 
+chai.use(chaiHttp);
 let expect = chai.expect;
-let token = 'a2b19364d25a5bb12798656d1bd150661c2d09ae';
 
 describe('Testing the app', () => {
-   it('Accessing without token ', async () => {
-      const response = await request(server).get('/api/repositories');
-      expect(response.status).to.equal(403);
+
+   it('Access / ', (done) => {
+      chai.request(app)
+         .get('/')
+         .end((err, res) => {
+            expect(res.status).to.equal(501);
+            done();
+         });
    });
 
-   it('Accessing with dummy token ', async () => {
-      try {
-         request(server).get('/api/repositories').set('token', 'dummy');
-      } catch(error) {
-         expect(error).to.equal(500);
-      }
+   it('Accessing without token ', (done) => {
+      chai.request(app)
+         .get('/api/repositories')
+         .end((err, res) => {
+            expect(res.status).to.equal(403);
+            done();
+         });
    });
 
-   it('List repos using real token ', async () => {
-      const response = await request(server).get('/api/repositories').set('token', token);
-      expect(response.status).to.equal(200);
+   it('Accessing with dummy token ', () => {
+      chai.request(app)
+         .get('/api/repositories')
+         .set('token', 'dummy')
+         .end((err, res) => {
+            expect(res.status).to.equal(403);
+            done();
+         });
    });
-
-   it('List repos using filter with real token ', async () => {
-      const response = await request(server).get('/api/repositories').set('token', token).query({ name: 'test' });
-      expect(response.status).to.equal(200);
-   });
-   
-
 })
