@@ -29,6 +29,7 @@ curl --request GET 'https://tscarton-git.herokuapp.com/api/repositories?name=my_
   ``` docker build . -t githubapi ```
   - Create the container
   ```docker run --name git -p 5000:5000 -d githubapi```
+  - It exposes the PORT 5000
 
   
 
