@@ -16,6 +16,6 @@ COPY . .
 # Export port 5000
 EXPOSE 5000
 
-# And finally, run the app.js
-CMD [ "node", "app.js" ]
+# And finally, run the app
+CMD [ "npm", "start" ]
 

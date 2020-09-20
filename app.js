@@ -3,10 +3,12 @@
  * Frameworks used:
  * - Express : Web framework for Node
  * - Cors : Used to avoid cross-origin during the response
+ * - Pino : Logging tool
  */
 const express = require('express');
 const cors = require('cors');
 const GitController = require('./GitController');
+const logger = require('./Log');
 
 // Using Express to generate the server
 const app = express();
@@ -15,7 +17,10 @@ const app = express();
 app.use(cors())
 
 // Rest function to get the repositories
-app.get('/api/repositories', GitController.getRepos);
+app.get('/api/repositories', function(req, res) {
+  logger.info('/api/repositories called');
+  GitController.getRepos(req, res);
+});
 
 // If the client tries to access '/' return 501
 app.get('/', function(req, res) {
@@ -27,7 +32,7 @@ const PORT = process.env.PORT || 5000;
 
 // Enable the list
 const server = app.listen(PORT, ()=> {
-    console.log("Server running on port " + PORT);
+  logger.info('Server running on port %d', PORT);
 });
 
 module.exports = app;

@@ -4,7 +4,8 @@
   "description": "Service to get Repositories from Github",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "NODE_ENV=production node app.js",
+    "dev": "NODE_ENV=dev LOG_LEVEL=debug node app.js",
     "test": "nyc mocha ./tests/**/*.test.js --exit"
   },
   "author": "Tiago Scarton",
@@ -13,7 +14,9 @@
     "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "octonode": "^0.9.5"
+    "express-pino-logger": "^5.0.0",
+    "octonode": "^0.9.5",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",

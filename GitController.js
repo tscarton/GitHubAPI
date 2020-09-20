@@ -4,6 +4,7 @@
  * - Octonode : Framework to access Git
  */
 const github = require('octonode');
+const logger = require('./Log');
 
 class GitController {
     /**
@@ -12,7 +13,9 @@ class GitController {
      * @returns {any}
      */
     static createGitClient(token) {
+        logger.debug('Creating GitClient');
         if (!token) {
+            logger.error('Token not provided');
             throw 403;
         }
         return github.client(token);
@@ -26,19 +29,24 @@ class GitController {
      */
     /* istanbul ignore next */
     static async listRepo(client, name) {
+        logger.debug('List repo param: ' + name);
         return new Promise((resolve, reject) => {
             if (!client) {
+                logger.error('Client does not exist');
                 reject(500);
             }
             let ghme = client.me();
             ghme.info((err, body) => {
                 if (err) {
+                    logger.error('It was not possible to load the Github user info');
                     reject(500);
                 } else {
                     let login = body.login;
                     // Building the Query to search for repos (name is optional)
                     let queryParam = 'user:' + login + " " + (name != '' ? name + ' in:name' : '');
                     let query = { q: queryParam };
+                    logger.info('query param: %s', queryParam);
+                    
                     /**
                      * I am using client.search.repos instead of ghme.repos because I can pass
                      * the repo name as a filter to bring just the repos I want (or all of them), the second method does not allow 
@@ -47,6 +55,7 @@ class GitController {
                      */
                     client.search().repos(query, function (err, body, header) {
                         if (err) {
+                            logger.error('It was not possible to load the Github user repos');
                             reject(500);
                         } else {
                             let repos = body.items.map(function (repo) {
@@ -79,6 +88,7 @@ class GitController {
         try {
             let client = GitController.createGitClient(token);
             let repos = await GitController.listRepo(client, name);
+            logger.debug('Repos found: ', repos);
             /* istanbul ignore next */
             res.status(200).send(repos);
         } catch (error) {
