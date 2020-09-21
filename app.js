@@ -3,7 +3,6 @@
  * Frameworks used:
  * - Express : Web framework for Node
  * - Cors : Used to avoid cross-origin during the response
- * - Pino : Logging tool
  */
 const express = require('express');
 const cors = require('cors');
