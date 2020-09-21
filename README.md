@@ -16,7 +16,7 @@ curl --request GET 'https://tscarton-git.herokuapp.com/api/repositories?name=my_
 
 
 -   How to run the app
-    -   Clone the this repo
+    -   Clone this repo
     -   ```npm install ```
     -   ```npm start```
     -   Or if dev environment ```npm run dev``` . The development environment uses DEBUG log level
